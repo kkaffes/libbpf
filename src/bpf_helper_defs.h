@@ -3535,31 +3535,6 @@ static long (*bpf_seq_printf_btf)(struct seq_file *m, struct btf_ptr *ptr, __u32
 static __u64 (*bpf_skb_cgroup_classid)(struct __sk_buff *skb) = (void *) 151;
 
 /*
- * bpf_redirect_neigh
- *
- * 	Redirect the packet to another net device of index *ifindex*
- * 	and fill in L2 addresses from neighboring subsystem. This helper
- * 	is somewhat similar to **bpf_redirect**\ (), except that it
- * 	populates L2 addresses as well, meaning, internally, the helper
- * 	relies on the neighbor lookup for the L2 address of the nexthop.
- *
- * 	The helper will perform a FIB lookup based on the skb's
- * 	networking header to get the address of the next hop, unless
- * 	this is supplied by the caller in the *params* argument. The
- * 	*plen* argument indicates the len of *params* and should be set
- * 	to 0 if *params* is NULL.
- *
- * 	The *flags* argument is reserved and must be 0. The helper is
- * 	currently only supported for tc BPF program types, and enabled
- * 	for IPv4 and IPv6 protocols.
- *
- * Returns
- * 	The helper returns **TC_ACT_REDIRECT** on success or
- * 	**TC_ACT_SHOT** on error.
- */
-static long (*bpf_redirect_neigh)(__u32 ifindex, struct bpf_redir_neigh *params, int plen, __u64 flags) = (void *) 152;
-
-/*
  * bpf_per_cpu_ptr
  *
  * 	Take a pointer to a percpu ksym, *percpu_ptr*, and return a
